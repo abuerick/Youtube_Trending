@@ -1,4 +1,3 @@
-# %%
 import glob
 import os
 import json
@@ -6,7 +5,7 @@ import pandas as pd
 
 
 
-# getting the json files to be merge, it's importat that the location provided only have the files we are going to be working with
+# getting the json files to be merged, location should only contain the files
 globbed_files = glob.glob("/Users/erick/Documents/Youtube_Trending/Raw_data/jsons/*.json")
 
 data = [] # pd.concat takes a list of dataframes as an agrument
@@ -26,11 +25,3 @@ df_flat.reset_index()
 df = df_flat.iloc[0:, 2:]
 
 df['filename'] = df['filename'].str.replace('_category_id.json', '')
-
-
-
-
-
-
-
-
