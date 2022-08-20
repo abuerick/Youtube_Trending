@@ -1,0 +1,36 @@
+# %%
+import glob
+import os
+import json
+import pandas as pd
+
+
+
+# getting the json files to be merge, it's importat that the location provided only have the files we are going to be working with
+globbed_files = glob.glob("/Users/erick/Documents/Youtube_Trending/Raw_data/jsons/*.json")
+
+data = [] # pd.concat takes a list of dataframes as an agrument
+for file in globbed_files:
+    frame = pd.read_json(file)
+    frame['filename'] = os.path.basename(file)
+    data.append(frame)
+
+bigframe = pd.concat(data, ignore_index=True)
+
+json_struct= json.loads(bigframe.to_json(orient='records'))
+
+df_flat = pd.json_normalize(json_struct)
+
+df_flat.reset_index()
+
+df = df_flat.iloc[0:, 2:]
+
+df['filename'] = df['filename'].str.replace('_category_id.json', '')
+
+
+
+
+
+
+
+
